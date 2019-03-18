@@ -1,4 +1,6 @@
-require 'test_helper'
+# frozen_string_literal: true
+
+require "test_helper"
 
 class BlogsControllerTest < ActionDispatch::IntegrationTest
   setup do
@@ -11,7 +13,7 @@ class BlogsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create blog" do
-    assert_difference('Blog.count') do
+    assert_difference("Blog.count") do
       post blogs_url, params: { blog: { body: @blog.body, title: @blog.title, user_id: @blog.user_id } }, as: :json
     end
 
@@ -29,7 +31,7 @@ class BlogsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy blog" do
-    assert_difference('Blog.count', -1) do
+    assert_difference("Blog.count", -1) do
       delete blog_url(@blog), as: :json
     end
 

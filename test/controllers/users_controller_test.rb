@@ -1,4 +1,6 @@
-require 'test_helper'
+# frozen_string_literal: true
+
+require "test_helper"
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
   setup do
@@ -11,7 +13,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create user" do
-    assert_difference('User.count') do
+    assert_difference("User.count") do
       post users_url, params: { user: { email: @user.email, password_digest: @user.password_digest, username: @user.username } }, as: :json
     end
 
@@ -29,7 +31,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy user" do
-    assert_difference('User.count', -1) do
+    assert_difference("User.count", -1) do
       delete user_url(@user), as: :json
     end
 
