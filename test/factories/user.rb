@@ -1,8 +1,9 @@
 FactoryBot.define do
   factory :user do
-    username {"John"}
+    sequence(:id){ |n| n}
+    username {"John" + random_word}
     email {"#{username}@example.com"}
-    password_digest {"password"}
+    password{"mysecretpass"}
   
     factory :user_with_blogs do
       transient do
@@ -15,4 +16,8 @@ FactoryBot.define do
       end
     end
   end
+end
+
+def random_word
+  ('a'..'z').to_a.shuffle.join
 end

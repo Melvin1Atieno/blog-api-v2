@@ -2,7 +2,10 @@ FactoryBot.define do
   factory :blog do
     user
     title {"first blog"}
-    body{"This is the first blog post"}
+    body{"This is the first blog post. It should be atleast 50
+          words. This is the story of how I got myself typing
+          atleast fifty words. Just like that. I hope this does it
+          because I am not about t start counting these characters"}
 
     factory :blog_with_comment do
       transient do
