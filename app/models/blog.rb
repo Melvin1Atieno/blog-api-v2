@@ -3,7 +3,8 @@
 class Blog < ApplicationRecord
   belongs_to :user
   has_many :comments, dependent: :destroy
-  validates :title, :body, :presence => true
+  validates :title, :body, presence: true
+  validates :title, uniqueness: true, on: :create
 
   validates :body, :length => {
     :minimum => 50,

@@ -24,8 +24,15 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
-  test 'user can have many posts' do
+  test 'user can have many blogs' do
     @user_with_blogs = create(:user_with_blogs)
     assert_equal 5, @user_with_blogs.blogs.size
+  end
+
+  test 'should delete associated blog when user is deleted' do
+    @user = create(:user_with_blogs)
+    assert_difference('Blog.count', -5) do
+      @user.destroy
+    end
   end
 end
