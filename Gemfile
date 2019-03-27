@@ -38,6 +38,7 @@ group :development, :test do
   gem "faker"
   gem "guard"
   gem "guard-minitest"
+  gem 'pry-byebug'
   gem "rubocop-rails_config"
 end
 
