@@ -6,11 +6,10 @@ class UsersController < ApplicationController
   # GET /users
   def index
     @users = User.all
-
     render json: @users
   end
 
-  # GET /users/1
+  # # GET /users/1
   def show
     render json: @user
   end
@@ -26,7 +25,7 @@ class UsersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /users/1
+  # # PATCH/PUT /users/1
   def update
     if @user.update(user_params)
       render json: @user
@@ -48,6 +47,6 @@ class UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:email, :username, :password_digest)
+      params.require(:data).permit(attributes:[:username, :password, :email])
     end
 end

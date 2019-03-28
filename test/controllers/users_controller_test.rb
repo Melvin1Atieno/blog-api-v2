@@ -4,7 +4,8 @@ require "test_helper"
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @user = users(:one)
+    @user = build(:user)
+    @saved_user = create(:user)
   end
 
   test "should get index" do
@@ -13,26 +14,25 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create user" do
-    assert_difference("User.count") do
-      post users_url, params: { user: { email: @user.email, password_digest: @user.password_digest, username: @user.username } }, as: :json
-    end
-
+    post users_url, params: {data: {'type': 'user','attributes':attributes_for(:user)}},
+    headers: {'Accept': 'application/vnd.api+json'}
     assert_response 201
   end
 
   test "should show user" do
-    get user_url(@user), as: :json
+    get user_url(@saved_user)
     assert_response :success
   end
 
   test "should update user" do
-    patch user_url(@user), params: { user: { email: @user.email, password_digest: @user.password_digest, username: @user.username } }, as: :json
+    patch user_url(@saved_user), params:{data: { 'type': 'user', 'attributes':attributes_for(:user)} },
+    headers: {'Accept': 'application/vnd.api+json'}
     assert_response 200
   end
 
   test "should destroy user" do
     assert_difference("User.count", -1) do
-      delete user_url(@user), as: :json
+      delete user_url(@saved_user), as: :json
     end
 
     assert_response 204
