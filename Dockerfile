@@ -21,6 +21,10 @@ RUN apk update && \
     rm -rf /var/cache/apk/* && \
     mkdir -p /usr/src/app
 
+# simple fix for pry unrecognized options
+RUN apk --update add less
+
+
 # Create system user to run as non-root. 
 RUN addgroup -S admin -g 1000 && adduser -S -g '' -u 1000 -G admin deploy
 
