@@ -10,3 +10,13 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
 end
+
+class ActionDispatch::IntegrationTest
+  def authenticated_user
+    @user = create(:user)
+    post authenticate_url, params: {data: {'type': 'user','attributes': {email: @user.email, password: @user.password }}},
+    headers: {'Accept': 'application/vnd.api+json'}
+    token = JSON.parse(response.body)
+    return token, @user
+  end
+end
