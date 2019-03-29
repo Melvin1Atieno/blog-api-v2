@@ -2,11 +2,11 @@
 
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :update, :destroy]
+  before_action :set_blog, only: [:create, :index]
 
   # GET /comments
   def index
-    @comments = Comment.all
-
+    @comments = @blog.comments
     render json: @comments
   end
 
@@ -17,9 +17,10 @@ class CommentsController < ApplicationController
 
   # POST /comments
   def create
-    @comment = Comment.new(comment_params)
-
+    @comment = @blog.comments.create(comment_params)
+    
     if @comment.save
+      # binding.pry
       render json: @comment, status: :created, location: @comment
     else
       render json: @comment.errors, status: :unprocessable_entity
@@ -29,7 +30,7 @@ class CommentsController < ApplicationController
   # PATCH/PUT /comments/1
   def update
     if @comment.update(comment_params)
-      render json: @comment
+      render json: @comment, status: :success
     else
       render json: @comment.errors, status: :unprocessable_entity
     end
@@ -41,6 +42,9 @@ class CommentsController < ApplicationController
   end
 
   private
+    def set_blog
+      @blog = Blog.find(params[:blog_id])
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_comment
       @comment = Comment.find(params[:id])
@@ -48,6 +52,6 @@ class CommentsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def comment_params
-      params.require(:comment).permit(:body, :blog_id)
+      params.require(:data).permit(attributes:[:body])
     end
 end
