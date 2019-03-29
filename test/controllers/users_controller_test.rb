@@ -16,6 +16,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   test "should create user" do
     post users_url, params: {data: {'type': 'user','attributes':attributes_for(:user)}},
     headers: {'Accept': 'application/vnd.api+json'}
+    binding.pry
     assert_response 201
   end
 

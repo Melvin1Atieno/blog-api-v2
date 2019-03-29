@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   
-  post 'authenticate', to: 'authentication#authenticate'
+  post 'authenticate', to: 'authentications#authenticate'
   resources :users do
     resources :blogs
   end
