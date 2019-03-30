@@ -2,7 +2,7 @@
 
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :update, :destroy]
-  before_action :set_blog, only: [:create, :index]
+  before_action :set_blog, only: [:create, :index, :update, :destroy]
 
   # GET /comments
   def index
@@ -12,7 +12,7 @@ class CommentsController < ApplicationController
 
   # GET /comments/1
   def show
-    render json: @comment
+    render json: @comment, status: :success, location: @comment
   end
 
   # POST /comments
@@ -20,8 +20,7 @@ class CommentsController < ApplicationController
     @comment = @blog.comments.create(comment_params)
     
     if @comment.save
-      # binding.pry
-      render json: @comment, status: :created, location: @comment
+      render json: @comment, status: :created
     else
       render json: @comment.errors, status: :unprocessable_entity
     end
@@ -29,7 +28,9 @@ class CommentsController < ApplicationController
 
   # PATCH/PUT /comments/1
   def update
-    if @comment.update(comment_params)
+    if @blog.user != @current_user
+      render json: @comment.errors, status: :unauthorized 
+    elsif @comment.update(comment_params)
       render json: @comment, status: :success
     else
       render json: @comment.errors, status: :unprocessable_entity
@@ -38,7 +39,11 @@ class CommentsController < ApplicationController
 
   # DELETE /comments/1
   def destroy
-    @comment.destroy
+    if @blog.user != @current_user
+      render json: @comment.errors, status: :unauthorized
+    else
+      @comment.destroy
+    end
   end
 
   private
