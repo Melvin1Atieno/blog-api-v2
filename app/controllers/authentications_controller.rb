@@ -4,7 +4,7 @@ class AuthenticationsController < ApplicationController
   def authenticate
     @token = authenticate_user(auth_params[:attributes][:email], auth_params[:attributes][:password])
     if !@token.nil?
-      render json: { auth_token: @token }, status: 200
+      render json: {data: {type: 'auth', attributes:{ auth_token: @token }}}, status: 200
     else
       render json: { error: @errors }, status: 401
     end
