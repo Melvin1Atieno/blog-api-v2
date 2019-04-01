@@ -7,12 +7,12 @@ class CommentsController < ApplicationController
   # GET /comments
   def index
     @comments = @blog.comments
-    render json: @comments, status: :success
+    render json: @comments
   end
 
   # GET /comments/1
   def show
-    render json: @comment, status: :success
+    render json: @comment
   end
 
   # POST /comments

@@ -19,7 +19,7 @@ class BlogsController < ApplicationController
     @blog = @current_user.blogs.create(blog_params)
 
     if @blog.save
-      render json: @blog, status: :created, location: @blog
+      render json: @blog, status: :created
     else
       render json: @blog.errors, status: :unprocessable_entity
     end
