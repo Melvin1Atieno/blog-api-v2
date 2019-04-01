@@ -7,12 +7,12 @@ class CommentsController < ApplicationController
   # GET /comments
   def index
     @comments = @blog.comments
-    render json: @comments
+    render json: @comments, status: :success
   end
 
   # GET /comments/1
   def show
-    render json: @comment, status: :success, location: @comment
+    render json: @comment, status: :success
   end
 
   # POST /comments
@@ -43,6 +43,7 @@ class CommentsController < ApplicationController
       render json: @comment.errors, status: :unauthorized
     else
       @comment.destroy
+      render json: {data: {type: 'comment', attributes: {comment: 'Deleted'}}}
     end
   end
 

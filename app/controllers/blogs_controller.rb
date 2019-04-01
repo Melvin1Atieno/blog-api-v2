@@ -42,6 +42,7 @@ class BlogsController < ApplicationController
       render json: @blog.errors, status: :unauthorized
     else
       @blog.destroy
+      render json: {data:{type: 'blog', attributes:{blog: 'deleted'}}}
     end
   end
 
