@@ -9,6 +9,12 @@ class BlogsControllerTest < ActionDispatch::IntegrationTest
     @unsaved_blog = build(:blog)
   end
 
+  test "should return unauthorized if token is missing" do
+    get blogs_url,
+    headers: {"Accept": "application/vnd.api+json"}
+    assert_response :unauthorized
+  end
+
   test "should get index" do
     get blogs_url,
     headers: {"Accept": "application/vnd.api+json", "Authorization": @token["auth_token"]}

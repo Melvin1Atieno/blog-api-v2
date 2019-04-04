@@ -6,20 +6,14 @@ class ApplicationController < ActionController::API
 
   def authenticate_request
     @current_user = authorize_request(request.headers)
-    render json: {error: 'Not authorized'}, status: 401 unless @current_user
+    render json: {error: @errors}, status: 401 unless @current_user
   end
-
-
+  
+  
   def authorize_request(headers)
     token = http_auth_header(headers)
     decoded_auth_token = JsonWebToken.decode(token)
-    @user = User.find(decoded_auth_token[:user_id])
-    if !@user
-      errors[:token] = 'Invalid token'
-      return nil
-    else
-      return @user
-    end
+    @user = User.find(decoded_auth_token[:user_id]) rescue nil
   end
 
   def http_auth_header(headers)
